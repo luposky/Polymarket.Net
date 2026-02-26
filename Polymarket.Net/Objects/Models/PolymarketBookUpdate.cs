@@ -1,10 +1,4 @@
-﻿using Polymarket.Net.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 
 namespace Polymarket.Net.Objects.Models
 {
@@ -32,7 +26,7 @@ namespace Polymarket.Net.Objects.Models
         /// Last trade price
         /// </summary>
         [JsonPropertyName("last_trade_price")]
-        public decimal LastTradePrice { get; set; }
+        public decimal? LastTradePrice { get; set; }
         /// <summary>
         /// Bids
         /// </summary>
