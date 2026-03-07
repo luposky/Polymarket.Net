@@ -37,7 +37,7 @@ namespace Polymarket.Net.Interfaces.Clients.ClobApi
         /// GET /data/order/{orderId}
         /// </para>
         /// </summary>
-        /// <param name="orderId">Order id</param>
+        /// <param name="orderId">["<c>order_id</c>"] Order id</param>
         /// <param name="ct">Cancellation token</param>
         Task<WebCallResult<PolymarketOrder>> GetOrderAsync(string orderId, CancellationToken ct = default);
 
@@ -76,18 +76,18 @@ namespace Polymarket.Net.Interfaces.Clients.ClobApi
         /// POST /order
         /// </para>
         /// </summary>
-        /// <param name="tokenId">Token id</param>
-        /// <param name="side">Side</param>
+        /// <param name="tokenId">["<c>order.tokenId</c>"] Token id</param>
+        /// <param name="side">["<c>order.side</c>"] Side</param>
         /// <param name="orderType">Type of order</param>
-        /// <param name="timeInForce">Time in force</param>
+        /// <param name="timeInForce">["<c>orderType</c>"] Time in force</param>
         /// <param name="quantity">Quantity of shares</param>
         /// <param name="price">Price, value between 0 and 1. For example 0.001 means 0.1c in the UI, 0.5 means 50c in UI</param>
-        /// <param name="postOnly">Post only order</param>
-        /// <param name="feeRateBps">Fee rate basis points as required by the operator</param>
-        /// <param name="takerAddress">Taker/operator address</param>
-        /// <param name="clientOrderId">Client order id</param>
-        /// <param name="expiration">Expiration time</param>
-        /// <param name="nonce">Nonce</param>
+        /// <param name="postOnly">["<c>postOnly</c>"] Post only order</param>
+        /// <param name="feeRateBps">["<c>order.feeRateBps</c>"] Fee rate basis points as required by the operator</param>
+        /// <param name="takerAddress">["<c>order.taker</c>"] Taker/operator address</param>
+        /// <param name="clientOrderId">["<c>order.salt</c>"] Client order id</param>
+        /// <param name="expiration">["<c>order.expiration</c>"] Expiration time</param>
+        /// <param name="nonce">["<c>order.nonce</c>"] Nonce</param>
         /// <param name="ct">Cancellation token</param>
         Task<WebCallResult<PolymarketOrderResult>> PlaceOrderAsync(
             string tokenId,
@@ -126,7 +126,7 @@ namespace Polymarket.Net.Interfaces.Clients.ClobApi
         /// DELETE /order
         /// </para>
         /// </summary>
-        /// <param name="orderId">Order id</param>
+        /// <param name="orderId">["<c>orderID</c>"] Order id</param>
         /// <param name="ct">Cancellation token</param>
         Task<WebCallResult<PolymarketCancelResult>> CancelOrderAsync(string orderId, CancellationToken ct = default);
         /// <summary>
@@ -150,8 +150,8 @@ namespace Polymarket.Net.Interfaces.Clients.ClobApi
         /// DELETE /orders
         /// </para>
         /// </summary>
-        /// <param name="conditionId">The condition/market id</param>
-        /// <param name="tokenId">Asset/token id</param>
+        /// <param name="conditionId">["<c>market</c>"] The condition/market id</param>
+        /// <param name="tokenId">["<c>asset_id</c>"] Asset/token id</param>
         /// <param name="ct">Cancellation token</param>
         Task<WebCallResult<PolymarketCancelResult>> CancelOrdersOnMarketAsync(string? conditionId = null, string? tokenId = null, CancellationToken ct = default);
         /// <summary>
@@ -175,13 +175,13 @@ namespace Polymarket.Net.Interfaces.Clients.ClobApi
         /// GET /data/trades
         /// </para>
         /// </summary>
-        /// <param name="tradeId">Filter by trade id</param>
-        /// <param name="takerAddress">Filter by taker address</param>
-        /// <param name="makerAddress">Filter by maker address</param>
-        /// <param name="conditionId">Filter by condition id</param>
-        /// <param name="startTime">Filter by start time</param>
-        /// <param name="endTime">Filter by end time</param>
-        /// <param name="cursor">Next page cursor</param>
+        /// <param name="tradeId">["<c>id</c>"] Filter by trade id</param>
+        /// <param name="takerAddress">["<c>taker</c>"] Filter by taker address</param>
+        /// <param name="makerAddress">["<c>maker</c>"] Filter by maker address</param>
+        /// <param name="conditionId">["<c>market</c>"] Filter by condition id</param>
+        /// <param name="startTime">["<c>after</c>"] Filter by start time</param>
+        /// <param name="endTime">["<c>before</c>"] Filter by end time</param>
+        /// <param name="cursor">["<c>next_cursor</c>"] Next page cursor</param>
         /// <param name="ct">Cancellation token</param>
         Task<WebCallResult<PolymarketPage<PolymarketTrade>>> GetUserTradesAsync(
             string? tradeId = null,
@@ -196,7 +196,7 @@ namespace Polymarket.Net.Interfaces.Clients.ClobApi
         /// <summary>
         /// Send order heartbeat. Should be send every 10 seconds or all open orders will be canceled
         /// </summary>
-        /// <param name="heartbeatId">The id from the previous PostOrderHeartbeatAsync response, or null for initial request</param>
+        /// <param name="heartbeatId">["<c>heartbeat_id</c>"] The id from the previous PostOrderHeartbeatAsync response, or null for initial request</param>
         /// <param name="ct">Cancellation token</param>
         Task<WebCallResult<PolymarketOrderHeartbeat>> PostOrderHeartbeatAsync(
             string? heartbeatId,

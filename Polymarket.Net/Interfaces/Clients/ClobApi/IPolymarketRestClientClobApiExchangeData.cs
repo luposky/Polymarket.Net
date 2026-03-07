@@ -76,8 +76,8 @@ namespace Polymarket.Net.Interfaces.Clients.ClobApi
         /// GET /price
         /// </para>
         /// </summary>
-        /// <param name="tokenId">Token id</param>
-        /// <param name="side">Side</param>
+        /// <param name="tokenId">["<c>token_id</c>"] Token id</param>
+        /// <param name="side">["<c>side</c>"] Side</param>
         /// <param name="ct">Cancellation token</param>
         Task<WebCallResult<PolymarketPrice>> GetPriceAsync(string tokenId, OrderSide side, CancellationToken ct = default);
 
@@ -103,14 +103,14 @@ namespace Polymarket.Net.Interfaces.Clients.ClobApi
         /// GET /midpoint
         /// </para>
         /// </summary>
-        /// <param name="tokenId">The token id</param>
+        /// <param name="tokenId">["<c>token_id</c>"] The token id</param>
         /// <param name="ct">Cancellation token</param>
         Task<WebCallResult<PolymarketMidPrice>> GetMidpointPriceAsync(string tokenId, CancellationToken ct = default);
 
         /// <summary>
         /// Get mid point prices for tokens
         /// </summary>
-        /// <param name="tokenIds">Tokens to request</param>
+        /// <param name="tokenIds">["<c>token_id</c>"] Tokens to request</param>
         /// <param name="ct">Cancellation token</param>
         Task<WebCallResult<Dictionary<string, decimal>>> GetMidpointPricesAsync(IEnumerable<string> tokenIds, CancellationToken ct = default);
 
@@ -123,18 +123,18 @@ namespace Polymarket.Net.Interfaces.Clients.ClobApi
         /// GET /prices-history
         /// </para>
         /// </summary>
-        /// <param name="market">The market</param>
-        /// <param name="startTime">Filter by start time</param>
-        /// <param name="endTime">Filter by end time</param>
-        /// <param name="interval">Interval</param>
-        /// <param name="fidelity">Fidelity in minutes</param>
+        /// <param name="market">["<c>market</c>"] The market</param>
+        /// <param name="startTime">["<c>startTs</c>"] Filter by start time</param>
+        /// <param name="endTime">["<c>endTs</c>"] Filter by end time</param>
+        /// <param name="interval">["<c>interval</c>"] Interval</param>
+        /// <param name="fidelity">["<c>fidelity</c>"] Fidelity in minutes</param>
         /// <param name="ct">Cancellation token</param>
         Task<WebCallResult<PolymarketPriceHistory[]>> GetPriceHistoryAsync(string market, DateTime? startTime = null, DateTime? endTime = null, DataInterval? interval = null, int? fidelity = null, CancellationToken ct = default);
 
         /// <summary>
         /// Get bid/ask spread for a a token
         /// </summary>
-        /// <param name="tokenId">Token id</param>
+        /// <param name="tokenId">["<c>token_id</c>"] Token id</param>
         /// <param name="ct">Cancellation token</param>
         Task<WebCallResult<PolymarketSpread>> GetBidAskSpreadsAsync(string tokenId, CancellationToken ct = default);
 
@@ -147,7 +147,7 @@ namespace Polymarket.Net.Interfaces.Clients.ClobApi
         /// POST /spreads
         /// </para>
         /// </summary>
-        /// <param name="tokenIds">Token ids</param>
+        /// <param name="tokenIds">["<c>token_id</c>"] Token ids</param>
         /// <param name="ct">Cancellation token</param>
         Task<WebCallResult<Dictionary<string, decimal>>> GetBidAskSpreadsAsync(IEnumerable<string> tokenIds, CancellationToken ct = default);
 
@@ -160,7 +160,7 @@ namespace Polymarket.Net.Interfaces.Clients.ClobApi
         /// GET /book
         /// </para>
         /// </summary>
-        /// <param name="tokenId">The token id</param>
+        /// <param name="tokenId">["<c>token_id</c>"] The token id</param>
         /// <param name="ct">Cancellation token</param>
         Task<WebCallResult<PolymarketOrderBook>> GetOrderBookAsync(string tokenId, CancellationToken ct = default);
 
@@ -173,42 +173,42 @@ namespace Polymarket.Net.Interfaces.Clients.ClobApi
         /// POST /books
         /// </para>
         /// </summary>
-        /// <param name="tokenIds">The token ids</param>
+        /// <param name="tokenIds">["<c>token_id</c>"] The token ids</param>
         /// <param name="ct">Cancellation token</param>
         Task<WebCallResult<PolymarketOrderBook[]>> GetOrderBooksAsync(IEnumerable<string> tokenIds, CancellationToken ct = default);
 
         /// <summary>
         /// Get tick size for a token
         /// </summary>
-        /// <param name="tokenId">The token ids</param>
+        /// <param name="tokenId">["<c>token_id</c>"] The token ids</param>
         /// <param name="ct">Cancellation token</param>
         Task<WebCallResult<PolymarketTickSize>> GetTickSizeAsync(string tokenId, CancellationToken ct = default);
 
         /// <summary>
         /// Get negative risk for a token
         /// </summary>
-        /// <param name="tokenId">The token ids</param>
+        /// <param name="tokenId">["<c>token_id</c>"] The token ids</param>
         /// <param name="ct">Cancellation token</param>
         Task<WebCallResult<PolymarketNegRisk>> GetNegativeRiskAsyncAsync(string tokenId, CancellationToken ct = default);
 
         /// <summary>
         /// Get fee rate in basis points
         /// </summary>
-        /// <param name="tokenId">The token ids</param>
+        /// <param name="tokenId">["<c>token_id</c>"] The token ids</param>
         /// <param name="ct">Cancellation token</param>
         Task<WebCallResult<PolymarketFeeRateBps>> GetFeeRateBpsAsync(string tokenId, CancellationToken ct = default);
 
         /// <summary>
         /// Get last trade price for a token
         /// </summary>
-        /// <param name="tokenId">The token id</param>
+        /// <param name="tokenId">["<c>token_id</c>"] The token id</param>
         /// <param name="ct">Cancellation token</param>
         Task<WebCallResult<PolymarketTradePrice>> GetLastTradePriceAsync(string tokenId, CancellationToken ct = default);
 
         /// <summary>
         /// Get last trade price for tokens
         /// </summary>
-        /// <param name="tokenIds">The token ids</param>
+        /// <param name="tokenIds">["<c>token_id</c>"] The token ids</param>
         /// <param name="ct">Cancellation token</param>
         Task<WebCallResult<PolymarketTradePrice[]>> GetLastTradePricesAsync(IEnumerable<string> tokenIds, CancellationToken ct = default);
 
