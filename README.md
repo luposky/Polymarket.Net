@@ -238,6 +238,10 @@ Make a one time donation in a crypto currency of your choice. If you prefer to d
 Alternatively, sponsor me on Github using [Github Sponsors](https://github.com/sponsors/JKorf). 
 
 ## Release notes
+* Version 1.5.2 - 10 Mar 2026
+    * Updated order quantity/price rounding
+    * Updated xml comments to include json fields
+
 * Version 1.5.1 - 06 Mar 2026
     * Fixed bug in market order buy price determination
     * Fixed exception in PlaceOrderAsync when placing a market order when order book is empty
