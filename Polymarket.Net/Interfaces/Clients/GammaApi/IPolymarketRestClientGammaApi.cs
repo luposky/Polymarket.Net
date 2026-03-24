@@ -13,7 +13,7 @@ namespace Polymarket.Net.Interfaces.Clients.GammaApi
     /// <summary>
     /// Polymarket Gamma API endpoints
     /// </summary>
-    public interface IPolymarketRestClientGammaApi : IRestApiClient, IDisposable
+    public interface IPolymarketRestClientGammaApi : IRestApiClient<PolymarketCredentials>, IDisposable
     {
         /// <summary>
         /// Options
