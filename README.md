@@ -266,6 +266,21 @@ Make a one time donation in a crypto currency of your choice. If you prefer to d
 Alternatively, sponsor me on Github using [Github Sponsors](https://github.com/sponsors/JKorf). 
 
 ## Release notes
+* Version 2.0.0 - 24 Mar 2026
+    * Updated CryptoExchange.Net to version 11.0.1, see https://github.com/JKorf/CryptoExchange.Net/releases/ for full release notes
+    * Updated class for supplying API credentials from ApiCredentials to PolymarketCredentials
+    * Updated Shared order status parsing to default to Unknown value if not parsable
+    * Updated signing logic to unified logic in the CryptoExchange.Net library
+    * Added cursor parameter to restClient.ClobApi.Trading.GetOpenOrdersAsync endpoint
+    * Updated PolymarketEvent ParentEvent to ParentEventId and changed type to long?
+    * Fixed SubscribeToPlatformUpdatesAsync onMarketResolved handling
+    * Fixed exception in PolymarketSocketClient.UpdateL2Credentials
+    * Fixed parameter serialization restClient.ClobApi.Account.GetBuilderTradesAsync endpoint
+    * Fixed parameter serialization restClient.ClobApi.Trading.GetOpenOrdersAsync endpoint
+
+    * Notes for updating:
+        * Update ApiCredentials to PolymarketCredentials for authentication, and provided L1 and L2 credentials separately, i.e. `ApiCredentials = new ApiCredentials(signType, l1key, l1fundkey, l2key, l2sec, l2pass)` => `ApiCredentials = new PolymarketCredentials(new PolymarketL1Credential(signType, l1key, l1fundkey), new HMACPassCredential(l2key, l2sec, l2pass))`
+
 * Version 1.5.2 - 10 Mar 2026
     * Updated order quantity/price rounding
     * Updated xml comments to include json fields
