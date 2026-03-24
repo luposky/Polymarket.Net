@@ -46,47 +46,68 @@ Polymarket.Net is available on [GitHub packages](https://github.com/JKorf/Polyma
 The NuGet package files are added along side the source with the latest GitHub release which can found [here](https://github.com/JKorf/Polymarket.Net/releases).
 
 ## How to use
-* REST Endpoints
-	```csharp
-	// Get the order book info for the outcomes of the first market via rest request
-    var markets = await polymarketRestClient.GammaApi.GetMarketsAsync(closed: false);
-    if (!markets.Success)
-    {
-        Console.WriteLine("Failed: " + markets.Error);
-        return;
-    }
+*Basic request:* 
+```csharp
+// Get the order book info for the outcomes of the first market via rest request
+var markets = await polymarketRestClient.GammaApi.GetMarketsAsync(closed: false);
+if (!markets.Success)
+{
+	Console.WriteLine("Failed: " + markets.Error);
+	return;
+}
 
-    var firstMarket = markets.Data[0];
-    var bookInfo = await polymarketRestClient.ClobApi.ExchangeData.GetOrderBooksAsync(firstMarket.ClobTokenIds!);
+var firstMarket = markets.Data[0];
+var bookInfo = await polymarketRestClient.ClobApi.ExchangeData.GetOrderBooksAsync(firstMarket.ClobTokenIds!);
+```
+	
+*Place order:*
+```csharp
+var restClient = new PolymarketRestClient(opts => {
+	opts.ApiCredentials = new PolymarketCredentials(new PolymarketL1Credential("PRIVATEKEY", "PRIVATESIGNERKEY"));
+});
 
-	```
-* Websocket streams
-	```csharp
-    // Subscribe to updates for a specific token/asset via the websocket API
-    var socketClient = new PolymarketSocketClient();
-    var tokenId = "11862165566757345985240476164489718219056735011698825377388402888080786399275";
-    var subscriptionResult = await polymarketSocketClient.ClobApi.SubscribeToTokenUpdatesAsync([tokenId2],
-        priceUpdate =>
-        {
-            // Handle price change update
-        },
-        bookUpdate =>
-        {
-            // Handle order book update
-        },
-        lastTradePriceUpdate =>
-        {
-            // Handle last trade price update
-        },
-        tickSizeUpdate =>
-        {
-            // Handle tick size update
-        },
-        bestBidAskUpdate =>
-        {
-            // Handle best bid/ask change update
-        });
-	```
+// Update the client with layer 2 credentials
+var credentials = await polymarketRestClient.ClobApi.Account.GetOrCreateApiCredentialsAsync();
+polymarketRestClient.UpdateL2Credentials(credentials.Data);
+
+// Place Limit order to buy 50 shared at 0.1 ($10)
+var tokenIdTest = "67565972075898091709163371829761231762318232475740950317083391526954889294846";
+var result = await polymarketRestClient.ClobApi.Trading.PlaceOrderAsync(
+    tokenIdTest, 
+	OrderSide.Buy,
+	OrderType.Limit, 
+	50, 
+	price: 0.1m,
+	feeRateBps: 0);
+```
+
+*WebSocket subscription:*
+```csharp
+// Subscribe to updates for a specific token/asset via the websocket API
+var socketClient = new PolymarketSocketClient();
+var tokenId = "11862165566757345985240476164489718219056735011698825377388402888080786399275";
+var subscriptionResult = await polymarketSocketClient.ClobApi.SubscribeToTokenUpdatesAsync([tokenId2],
+	priceUpdate =>
+	{
+		// Handle price change update
+	},
+	bookUpdate =>
+	{
+		// Handle order book update
+	},
+	lastTradePriceUpdate =>
+	{
+		// Handle last trade price update
+	},
+	tickSizeUpdate =>
+	{
+		// Handle tick size update
+	},
+	bestBidAskUpdate =>
+	{
+		// Handle best bid/ask change update
+	});
+```
 
 ### Authentication
 Authenticate using an email account and providing the exported private key and the funding address. This will require you to request the layer 2 credentials before orders can be placed:
