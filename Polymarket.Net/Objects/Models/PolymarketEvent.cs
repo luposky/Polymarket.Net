@@ -1,3 +1,4 @@
+using CryptoExchange.Net.Converters.SystemTextJson;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -203,10 +204,10 @@ namespace Polymarket.Net.Objects.Models
         [JsonPropertyName("disqusThread")]
         public string DisqusThread { get; set; } = string.Empty;
         /// <summary>
-        /// ["<c>parentEvent</c>"] Parent event
+        /// ["<c>parentEventId</c>"] Parent event
         /// </summary>
-        [JsonPropertyName("parentEvent")]
-        public string ParentEvent { get; set; } = string.Empty;
+        [JsonPropertyName("parentEventId")]
+        public long? ParentEventId { get; set; }
         /// <summary>
         /// ["<c>enableOrderBook</c>"] Enabled order book
         /// </summary>
