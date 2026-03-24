@@ -285,9 +285,18 @@ namespace Polymarket.Net.Clients.ClobApi
             return result;
         }
 
-        public async Task<WebCallResult<PolymarketPage<PolymarketOrder>>> GetOpenOrdersAsync(string? orderId = null, string? conditionId = null, string? assetId = null, CancellationToken ct = default)
+        public async Task<WebCallResult<PolymarketPage<PolymarketOrder>>> GetOpenOrdersAsync(
+            string? orderId = null,
+            string? conditionId = null,
+            string? assetId = null,
+            string? cursor = null,
+            CancellationToken ct = default)
         {
             var parameters = new ParameterCollection();
+            parameters.AddOptional("id", orderId);
+            parameters.AddOptional("market", conditionId);
+            parameters.AddOptional("asset_id", assetId);
+            parameters.AddOptional("next_cursor", cursor);
             var request = _definitions.GetOrCreate(HttpMethod.Get, "/data/orders", PolymarketPlatform.RateLimiter.ClobApi, 1, true,
                 limitGuard: new SingleLimitGuard(500, TimeSpan.FromSeconds(10), RateLimitWindowType.Sliding));
             var result = await _baseClient.SendAsync<PolymarketPage<PolymarketOrder>>(request, parameters, ct).ConfigureAwait(false);
