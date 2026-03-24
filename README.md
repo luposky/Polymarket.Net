@@ -92,39 +92,46 @@ The NuGet package files are added along side the source with the latest GitHub r
 Authenticate using an email account and providing the exported private key and the funding address. This will require you to request the layer 2 credentials before orders can be placed:
 ```csharp
 var credsEmailLayer1 = new PolymarketCredentials(
-    SignType.Email, // Email wallet, when creating a new wallet via the web interface
-    "0x00..", // The private key, can be exported from the web interface
-    "0x00.."); // The polymarket funding address, can be found in the web interface under `Profile -> Your Polymarket Wallet Address`
+	new PolymarketL1Credential(
+		SignType.Email, // Email wallet, when creating a new wallet via the web interface
+		"0x00..", // The private key, can be exported from the web interface
+		"0x00..")); // The polymarket funding address, can be found in the web interface under `Profile -> Your Polymarket Wallet Address`
 ```
 
 Authenticate using an email account and providing the exported private key and the funding address, while also providing previously requested layer 2 credentials. Can be used to place orders directly:
 ```csharp
 var credsEmailWithLayer2 = new PolymarketCredentials(
-    SignType.Email,// Email wallet, when creating a new wallet via the web interface
-    "0x00..", // The private key, can be exported from the web interface
-    "KEY",// The L2 API key as previously retrieved with `polymarketRestClient.ClobApi.Account.GetOrCreateApiCredentialsAsync()`
-    "SEC", // The L2 API secret as previously retrieved with `polymarketRestClient.ClobApi.Account.GetOrCreateApiCredentialsAsync()`
-    "PASS", // The L2 API passphrase as previously retrieved with `polymarketRestClient.ClobApi.Account.GetOrCreateApiCredentialsAsync()`
-    "0x00.."); // The polymarket funding address, can be found in the web interface under `Profile -> Your Polymarket Wallet Address`
+    new PolymarketL1Credential(
+        SignType.Email,// Email wallet, when creating a new wallet via the web interface
+        "0x00..",// The private key, can be exported from the web interface
+        "0x00.."), // The polymarket funding address, can be found in the web interface under `Profile -> Your Polymarket Wallet Address`
+    new HMACPassCredential(
+        "KEY",// The L2 API key as previously retrieved with `polymarketRestClient.ClobApi.Account.GetOrCreateApiCredentialsAsync()`
+        "SEC", // The L2 API secret as previously retrieved with `polymarketRestClient.ClobApi.Account.GetOrCreateApiCredentialsAsync()`
+        "PASS" // The L2 API passphrase as previously retrieved with `polymarketRestClient.ClobApi.Account.GetOrCreateApiCredentialsAsync()`
+    ));
 ```
 
 Authenticate using an external account, for example MetaMask, and providing the private key. This will require you to request the layer 2 credentials before orders can be placed:
 ```csharp
 var credsEoaLayer1 = new PolymarketCredentials(
-    SignType.EOA, // Externally Owned Account wallet, when using an existing wallet to connect to polymarket
-    "0x00.." // The private key for the wallet
-    );
+    new PolymarketL1Credential(
+        SignType.EOA, // Externally Owned Account wallet, when using an existing wallet to connect to polymarket
+        "0x00..")); // The private key for the wallet
 ```
 
 Authenticate using an external account, for example MetaMask, and providing the private key, while also providing previously requested layer 2 credentials. Can be used to place orders directly:
 ```csharp
 var credsEoaWithLayer2 = new PolymarketCredentials(
-    SignType.EOA, // Externally Owned Account wallet, when using an existing wallet to connect to polymarket
-    "0x00..", // The private key for the wallet
-    "KEY", // The L2 API key as previously retrieved with `polymarketRestClient.ClobApi.Account.GetOrCreateApiCredentialsAsync()`
-    "SEC", // The L2 API secret as previously retrieved with `polymarketRestClient.ClobApi.Account.GetOrCreateApiCredentialsAsync()`
-    "PASS" // The L2 API passphrase as previously retrieved with `polymarketRestClient.ClobApi.Account.GetOrCreateApiCredentialsAsync()`
-    );
+    new PolymarketL1Credential(
+        SignType.EOA, // Externally Owned Account wallet, when using an existing wallet to connect to polymarket
+        "0x00.." // The private key for the wallet
+    ),
+    new HMACPassCredential(
+        "KEY", // The L2 API key as previously retrieved with `polymarketRestClient.ClobApi.Account.GetOrCreateApiCredentialsAsync()`
+        "SEC", // The L2 API secret as previously retrieved with `polymarketRestClient.ClobApi.Account.GetOrCreateApiCredentialsAsync()`
+        "PASS" // The L2 API passphrase as previously retrieved with `polymarketRestClient.ClobApi.Account.GetOrCreateApiCredentialsAsync()`
+    ));
 ```
 
 Retrieve and set layer 2 credentials need for placing orders (required when L2 credentials not provided in the credentials):
