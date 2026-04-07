@@ -296,8 +296,8 @@ namespace Polymarket.Net.Clients.GammaApi
             parameters.AddOptionalString("liquidity_max", liquidityMax);
             parameters.AddOptionalString("volume_min", volumeMin);
             parameters.AddOptionalString("volume_max", volumeMax);
-            parameters.AddOptionalString("start_data_min", startTimeMin);
-            parameters.AddOptionalString("start_data_max", startTimeMax);
+            parameters.AddOptionalString("start_date_min", startTimeMin);
+            parameters.AddOptionalString("start_date_max", startTimeMax);
             parameters.AddOptionalString("end_data_min", endTimeMin);
             parameters.AddOptionalString("end_data_max", endTimeMax);
 
@@ -405,8 +405,8 @@ namespace Polymarket.Net.Clients.GammaApi
             parameters.AddOptionalString("rewards_min", rewardsMin);
             parameters.AddOptionalString("volume_min", volumeMin);
             parameters.AddOptionalString("volume_max", volumeMax);
-            parameters.AddOptionalString("start_data_min", startTimeMin);
-            parameters.AddOptionalString("start_data_max", startTimeMax);
+            parameters.AddOptionalString("start_date_min", startTimeMin);
+            parameters.AddOptionalString("start_date_max", startTimeMax);
             parameters.AddOptionalString("end_data_min", endTimeMin);
             parameters.AddOptionalString("end_data_max", endTimeMax);
 
