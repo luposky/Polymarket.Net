@@ -20,7 +20,7 @@ namespace Polymarket.Net.Objects.Sockets.Subscriptions
         private readonly Action<DataEvent<PolymarketLastTradePriceUpdate>>? _lastTradePriceHandler;
         private readonly Action<DataEvent<PolymarketTickSizeUpdate>>? _lastTickSizeHandler;
         private readonly Action<DataEvent<PolymarketBestBidAskUpdate>>? _bidAskUpdateHandler;
-        private readonly string[] _tokenIds;
+        private readonly HashSet<string> _tokenIds;
 
         private PolymarketSocketClientClobApi _client;
 
@@ -44,15 +44,15 @@ namespace Polymarket.Net.Objects.Sockets.Subscriptions
             _lastTradePriceHandler = lastTradePriceHandler;
             _lastTickSizeHandler = tickSizeUpdateHandler;
             _bidAskUpdateHandler = bidAskUpdateHandler;
-            _tokenIds = tokenIds;
+            _tokenIds = new HashSet<string>(tokenIds);
 
             IndividualSubscriptionCount = tokenIds.Length;
 
             var routes = new List<MessageRoute>();
 
+            routes.Add(MessageRoute<PolymarketPriceChangeUpdate>.CreateWithoutTopicFilter("price_change", DoHandleMessage));
             foreach(var item in tokenIds)
             {
-                routes.Add(MessageRoute<PolymarketPriceChangeUpdate>.CreateWithoutTopicFilter("price_change", DoHandleMessage));
                 routes.Add(MessageRoute<PolymarketBookUpdate>.CreateWithTopicFilter("book", item, DoHandleMessage));
                 routes.Add(MessageRoute<PolymarketBookUpdate[]>.CreateWithTopicFilter("book_snapshot", item, DoHandleMessage));
                 routes.Add(MessageRoute<PolymarketLastTradePriceUpdate>.CreateWithTopicFilter("last_trade_price", item, DoHandleMessage));
@@ -66,13 +66,13 @@ namespace Polymarket.Net.Objects.Sockets.Subscriptions
         /// <inheritdoc />
         protected override Query? GetSubQuery(SocketConnection connection)
         {
-            return new PolymarketQuery<object>("subscribe", _tokenIds);
+            return new PolymarketQuery<object>("subscribe", _tokenIds.ToArray());
         }
 
         /// <inheritdoc />
         protected override Query? GetUnsubQuery(SocketConnection connection)
         {
-            return new PolymarketQuery<object>("unsubscribe", _tokenIds);
+            return new PolymarketQuery<object>("unsubscribe", _tokenIds.ToArray());
         }
 
         /// <inheritdoc />
