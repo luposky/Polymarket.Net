@@ -1,7 +1,6 @@
 ﻿using CryptoExchange.Net.Interfaces.Clients;
 using CryptoExchange.Net.Objects;
 using Polymarket.Net.Objects.Models;
-using Polymarket.Net.Objects.Options;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,7 +14,9 @@ namespace Polymarket.Net.Interfaces.Clients.DataApi
     {
         /// <summary>
         /// Get list of all positions for a user
-        /// /// <para>
+        /// <para>
+        /// Docs:<br />
+        /// <a href="https://docs.polymarket.com/api-reference/core/get-current-positions-for-a-user" /><br />
         /// Endpoint:<br />
         /// GET /positions
         /// </para>

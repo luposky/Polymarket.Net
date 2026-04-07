@@ -2,6 +2,7 @@ using CryptoExchange.Net.Authentication;
 using CryptoExchange.Net.Interfaces.Clients;
 using CryptoExchange.Net.Objects.Options;
 using Polymarket.Net.Interfaces.Clients.ClobApi;
+using Polymarket.Net.Interfaces.Clients.DataApi;
 using Polymarket.Net.Interfaces.Clients.GammaApi;
 using Polymarket.Net.Objects.Models;
 
@@ -22,6 +23,11 @@ namespace Polymarket.Net.Interfaces.Clients
         /// </summary>
         /// <see cref="IPolymarketRestClientGammaApi"/>
         public IPolymarketRestClientGammaApi GammaApi { get; }
+        /// <summary>
+        /// Data API endpoints
+        /// </summary>
+        /// <see cref="IPolymarketRestClientDataApi"/>
+        public IPolymarketRestClientDataApi DataApi { get; }
 
         /// <summary>
         /// Update existing credentials which specify L1 credentials (PolymarketAddress, L1PrivateKey) with L2 credentials
