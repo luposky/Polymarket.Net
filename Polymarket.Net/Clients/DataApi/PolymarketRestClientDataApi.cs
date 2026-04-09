@@ -71,9 +71,12 @@ namespace Polymarket.Net.Clients.DataApi
         public override string FormatSymbol(string baseAsset, string quoteAsset, TradingMode tradingMode, DateTime? deliverDate = null)
             => throw new NotImplementedException();
 
-        public async Task<WebCallResult<PolymarketPosition[]>> GetPositionsAsync(string user, CancellationToken ct = default) {
-            var request = _definitions.GetOrCreate(HttpMethod.Get, $"positions?user={user}", PolymarketPlatform.RateLimiter.DataApi, 1, false);
-            return await SendAsync<PolymarketPosition[]>(request, null, ct).ConfigureAwait(false);
+        public async Task<WebCallResult<PolymarketPosition[]>> GetPositionsAsync(string user, CancellationToken ct = default)
+        {
+            var parameters = new ParameterCollection();
+            parameters.Add("user", user);
+            var request = _definitions.GetOrCreate(HttpMethod.Get, "positions", PolymarketPlatform.RateLimiter.DataApi, 1, false);
+            return await SendAsync<PolymarketPosition[]>(request, parameters, ct).ConfigureAwait(false);
         }
     }
 }
