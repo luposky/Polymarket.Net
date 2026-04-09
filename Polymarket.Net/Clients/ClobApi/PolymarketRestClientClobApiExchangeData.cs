@@ -57,7 +57,7 @@ namespace Polymarket.Net.Clients.ClobApi
             var parameters = new ParameterCollection();
             parameters.AddOptional("next_cursor", cursor);
             var request = _definitions.GetOrCreate(HttpMethod.Get, "sampling-simplified-markets", PolymarketPlatform.RateLimiter.ClobApi, 1, false);
-            return await _baseClient.SendAsync<PolymarketPage<PolymarketMarket>>(request, null, ct).ConfigureAwait(false);
+            return await _baseClient.SendAsync<PolymarketPage<PolymarketMarket>>(request, parameters, ct).ConfigureAwait(false);
         }
 
         #endregion
@@ -70,7 +70,7 @@ namespace Polymarket.Net.Clients.ClobApi
             var parameters = new ParameterCollection();
             parameters.AddOptional("next_cursor", cursor);
             var request = _definitions.GetOrCreate(HttpMethod.Get, "sampling-markets", PolymarketPlatform.RateLimiter.ClobApi, 1, false);
-            return await _baseClient.SendAsync<PolymarketPage<PolymarketMarketDetails>>(request, null, ct).ConfigureAwait(false);
+            return await _baseClient.SendAsync<PolymarketPage<PolymarketMarketDetails>>(request, parameters, ct).ConfigureAwait(false);
         }
 
         #endregion
@@ -83,7 +83,7 @@ namespace Polymarket.Net.Clients.ClobApi
             var parameters = new ParameterCollection();
             parameters.AddOptional("next_cursor", cursor);
             var request = _definitions.GetOrCreate(HttpMethod.Get, "simplified-markets", PolymarketPlatform.RateLimiter.ClobApi, 1, false);
-            return await _baseClient.SendAsync<PolymarketPage<PolymarketMarket>>(request, null, ct).ConfigureAwait(false);
+            return await _baseClient.SendAsync<PolymarketPage<PolymarketMarket>>(request, parameters, ct).ConfigureAwait(false);
         }
 
         #endregion
@@ -96,7 +96,7 @@ namespace Polymarket.Net.Clients.ClobApi
             var parameters = new ParameterCollection();
             parameters.AddOptional("next_cursor", cursor);
             var request = _definitions.GetOrCreate(HttpMethod.Get, "markets", PolymarketPlatform.RateLimiter.ClobApi, 1, false);
-            return await _baseClient.SendAsync<PolymarketPage<PolymarketMarketDetails>>(request, null, ct).ConfigureAwait(false);
+            return await _baseClient.SendAsync<PolymarketPage<PolymarketMarketDetails>>(request, parameters, ct).ConfigureAwait(false);
         }
 
         #endregion
@@ -106,7 +106,6 @@ namespace Polymarket.Net.Clients.ClobApi
         /// <inheritdoc />
         public async Task<WebCallResult<PolymarketMarketDetails>> GetMarketAsync(string conditionId, CancellationToken ct = default)
         {
-            var parameters = new ParameterCollection();
             var request = _definitions.GetOrCreate(HttpMethod.Get, "markets/" + conditionId, PolymarketPlatform.RateLimiter.ClobApi, 1, false);
             return await _baseClient.SendAsync<PolymarketMarketDetails>(request, null, ct).ConfigureAwait(false);
         }
