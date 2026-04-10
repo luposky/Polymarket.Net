@@ -56,14 +56,13 @@ namespace Polymarket.Net.Clients.ClobApi
             OrderSide side,
             OrderType orderType,
             decimal quantity,
+            decimal price,
+            decimal tickSize,
+            bool negRisk,
             TimeInForce timeInForce,
             CancellationToken ct = default)
         {
-            var bookInfo = await _baseClient.ExchangeData.GetOrderBookAsync(tokenId).ConfigureAwait(false);
-            if (!bookInfo)
-                return new WebCallResult<PolymarketOrderResult>(bookInfo.Error);
-
-            var makerTakerQuantities = await GetMakerTakerQuantitiesAsync(tokenId, side, orderType, quantity, null, timeInForce, bookInfo.Data.TickQuantity, bookInfo).ConfigureAwait(false);
+            var makerTakerQuantities = await GetMakerTakerQuantitiesAsync(tokenId, side, orderType, quantity, price, timeInForce, tickSize, null).ConfigureAwait(false);
             if (!makerTakerQuantities)
                 return new WebCallResult<PolymarketOrderResult>(makerTakerQuantities.Error);
 
@@ -86,7 +85,7 @@ namespace Polymarket.Net.Clients.ClobApi
                 _baseClient.AuthenticationProvider.GetOrderSignature(
                     orderParameters,
                     _baseClient.ClientOptions.Environment.ChainId,
-                    bookInfo.Data.NegativeRisk).ToLowerInvariant());
+                    negRisk).ToLowerInvariant());
 
             parameters.Add("order", orderParameters);
             parameters.Add("owner", credentials.L2!.Key!);
