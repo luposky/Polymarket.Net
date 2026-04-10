@@ -68,6 +68,13 @@ namespace Polymarket.Net.Interfaces.Clients.ClobApi
         /// <param name="ct">Cancellation token</param>
         Task<WebCallResult<Dictionary<string, bool>>> GetOrdersRewardScoringAsync(IEnumerable<string> orderIds, CancellationToken ct = default);
 
+        Task<WebCallResult<PolymarketOrderResult>> PlaceFastOrderAsync(string tokenId,
+            OrderSide side,
+            OrderType orderType,
+            decimal quantity,
+            TimeInForce timeInForce,
+            CancellationToken ct = default);
+
         /// <summary>
         /// Place a new order
         /// <para>
