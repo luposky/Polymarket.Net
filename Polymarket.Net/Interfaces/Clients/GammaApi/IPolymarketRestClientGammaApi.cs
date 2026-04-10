@@ -211,8 +211,8 @@ namespace Polymarket.Net.Interfaces.Clients.GammaApi
         /// <param name="liquidityMax">["<c>liquidity_max</c>"] Filter by max liquidity</param>
         /// <param name="volumeMin">["<c>volume_min</c>"] Filter by min volume</param>
         /// <param name="volumeMax">["<c>volume_max</c>"] Filter by max volume</param>
-        /// <param name="startTimeMin">["<c>start_data_min</c>"] Filter start time by min value</param>
-        /// <param name="startTimeMax">["<c>start_data_max</c>"] Filter start time by max value</param>
+        /// <param name="startTimeMin">["<c>start_date_min</c>"] Filter start time by min value</param>
+        /// <param name="startTimeMax">["<c>start_date_max</c>"] Filter start time by max value</param>
         /// <param name="endTimeMin">["<c>end_data_min</c>"] Filter end time by min value</param>
         /// <param name="endTimeMax">["<c>end_data_max</c>"] Filter end time by max value</param>
         /// <param name="limit">["<c>limit</c>"] Max number of results</param>
@@ -320,8 +320,8 @@ namespace Polymarket.Net.Interfaces.Clients.GammaApi
         /// <param name="liquidityMax">["<c>liquidity_max</c>"] Filter by max liquidity</param>
         /// <param name="volumeMin">["<c>volume_min</c>"] Filter by min volume</param>
         /// <param name="volumeMax">["<c>volume_max</c>"] Filter by max volume</param>
-        /// <param name="startTimeMin">["<c>start_data_min</c>"] Filter start time by min value</param>
-        /// <param name="startTimeMax">["<c>start_data_max</c>"] Filter start time by max value</param>
+        /// <param name="startTimeMin">["<c>start_date_min</c>"] Filter start time by min value</param>
+        /// <param name="startTimeMax">["<c>start_date_max</c>"] Filter start time by max value</param>
         /// <param name="endTimeMin">["<c>end_data_min</c>"] Filter end time by min value</param>
         /// <param name="endTimeMax">["<c>end_data_max</c>"] Filter end time by max value</param>
         /// <param name="limit">["<c>limit</c>"] Max number of results</param>

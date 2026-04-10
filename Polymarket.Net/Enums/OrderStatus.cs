@@ -13,17 +13,17 @@ namespace Polymarket.Net.Enums
         /// <summary>
         /// ["<c>LIVE</c>"] Live
         /// </summary>
-        [Map("LIVE")]
+        [Map("LIVE", "live")]
         Live,
         /// <summary>
         /// ["<c>CANCELED</c>"] Canceled
         /// </summary>
-        [Map("CANCELED")]
+        [Map("CANCELED", "canceled")]
         Canceled,
         /// <summary>
         /// ["<c>MATCHED</c>"] Matched
         /// </summary>
-        [Map("MATCHED")]
+        [Map("MATCHED", "matched")]
         Matched
     }
 }
