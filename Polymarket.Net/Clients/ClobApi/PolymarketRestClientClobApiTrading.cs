@@ -97,7 +97,7 @@ namespace Polymarket.Net.Clients.ClobApi
 
             parameters.Add("order", orderParameters);
             parameters.Add("owner", credentials.L2!.Key!);
-            parameters.AddEnum("orderType", timeInForce ?? TimeInForce.GoodTillCanceled);
+            parameters.AddEnum("orderType", timeInForce ?? (orderType == OrderType.Limit ? TimeInForce.GoodTillCanceled : TimeInForce.ImmediateOrCancel));
             parameters.AddOptional("postOnly", postOnly);
             var request = _definitions.GetOrCreate(HttpMethod.Post, "/order", PolymarketPlatform.RateLimiter.ClobApi, 1, true,
                 limitGuard: new SingleLimitGuard(3500, TimeSpan.FromSeconds(10), RateLimitWindowType.Sliding));
@@ -244,26 +244,43 @@ namespace Polymarket.Net.Clients.ClobApi
             price = Math.Round(price!.Value, rounding.Price).Normalize();
             if (side == OrderSide.Buy)
             {
-                takerQuantity = ExchangeHelpers.RoundDown(quantity, rounding.Size);
-                makerQuantity = takerQuantity * price.Value;
-
-                if (GetDecimalPlaces(makerQuantity) > rounding.Amount)
+                if (orderType == OrderType.Market)
                 {
-                    makerQuantity = ExchangeHelpers.RoundUp(makerQuantity, rounding.Amount + 4);
+                    takerQuantity = quantity;
+                    if (GetDecimalPlaces(takerQuantity) > rounding.Amount)
+                    {
+                        takerQuantity = RoundUp(takerQuantity, rounding.Amount + 4);
+                        if (GetDecimalPlaces(takerQuantity) > rounding.Amount)
+                            takerQuantity = RoundDown(takerQuantity, rounding.Amount);
+                    }
+
+                    makerQuantity = takerQuantity * price.Value;
+                    makerQuantity = Round(makerQuantity, rounding.Size);
+
+                }
+                else
+                {
+                    takerQuantity = RoundDown(quantity, rounding.Size);
+                    makerQuantity = takerQuantity * price.Value;
+
                     if (GetDecimalPlaces(makerQuantity) > rounding.Amount)
-                        makerQuantity = ExchangeHelpers.RoundDown(makerQuantity, rounding.Amount);
+                    {
+                        makerQuantity = RoundUp(makerQuantity, rounding.Amount + 4);
+                        if (GetDecimalPlaces(makerQuantity) > rounding.Amount)
+                            makerQuantity = RoundDown(makerQuantity, rounding.Amount);
+                    }
                 }
             }
             else
             {
-                makerQuantity = ExchangeHelpers.RoundDown(quantity, rounding.Size);
+                makerQuantity = RoundDown(quantity, rounding.Size);
                 takerQuantity = makerQuantity * price.Value;
 
                 if (GetDecimalPlaces(takerQuantity) > rounding.Amount)
                 {
-                    takerQuantity = ExchangeHelpers.RoundUp(takerQuantity, rounding.Amount + 4);
+                    takerQuantity = RoundUp(takerQuantity, rounding.Amount + 4);
                     if (GetDecimalPlaces(takerQuantity) > rounding.Amount)
-                        takerQuantity = ExchangeHelpers.RoundDown(takerQuantity, rounding.Amount);
+                        takerQuantity = RoundDown(takerQuantity, rounding.Amount);
                 }
             }
 
@@ -274,6 +291,24 @@ namespace Polymarket.Net.Clients.ClobApi
             makerQuantity = makerQuantity.Normalize();
 
             return new CallResult<(decimal, decimal)>((makerQuantity, takerQuantity));
+        }
+
+        private static decimal RoundUp(decimal value, int digits)
+        {
+            var factor = (decimal)Math.Pow(10, digits);
+            return Math.Ceiling(value * factor) / factor;
+        }
+
+        private static decimal Round(decimal value, int digits)
+        {
+            var factor = (decimal)Math.Pow(10, digits);
+            return Math.Round(value * factor) / factor;
+        }
+
+        private static decimal RoundDown(decimal value, int digits)
+        {
+            var factor = (decimal)Math.Pow(10, digits);
+            return Math.Floor(value * factor) / factor;
         }
 
         public async Task<WebCallResult<PolymarketOrder>> GetOrderAsync(string orderId, CancellationToken ct = default)
