@@ -267,6 +267,10 @@ Make a one time donation in a crypto currency of your choice. If you prefer to d
 Alternatively, sponsor me on Github using [Github Sponsors](https://github.com/sponsors/JKorf). 
 
 ## Release notes
+* Version 2.1.1 - 13 Apr 2026
+    * Default timeInForce to ImmediateOrCancel for market orders if parameter not provided
+    * Fixed order quantity rounding issues
+
 * Version 2.1.0 - 09 Apr 2026
     * Updated CryptoExchange.Net to version 11.1.0, see https://github.com/JKorf/CryptoExchange.Net/releases/ for full release notes
     * Added Polymarket Data API support
